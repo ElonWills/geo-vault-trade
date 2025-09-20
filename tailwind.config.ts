@@ -57,11 +57,17 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // Mining theme colors
+        copper: "hsl(var(--copper))",
+        gold: "hsl(var(--gold))",
+        earth: "hsl(var(--earth))",
+        stone: "hsl(var(--stone))",
+        encrypted: "hsl(var(--encrypted))",
       },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+      backgroundImage: {
+        'gradient-geological': 'var(--gradient-geological)',
+        'gradient-copper': 'var(--gradient-copper)',
+        'gradient-encrypted': 'var(--gradient-encrypted)',
       },
       keyframes: {
         "accordion-down": {
@@ -80,10 +86,50 @@ export default {
             height: "0",
           },
         },
+        "mining-cart": {
+          "0%": {
+            transform: "translateX(-100px)",
+          },
+          "50%": {
+            transform: "translateX(10px)",
+          },
+          "100%": {
+            transform: "translateX(-100px)",
+          },
+        },
+        "drill-pulse": {
+          "0%, 100%": {
+            opacity: "0.3",
+            transform: "scale(1)",
+          },
+          "50%": {
+            opacity: "1",
+            transform: "scale(1.1)",
+          },
+        },
+        "geological-scan": {
+          "0%": {
+            transform: "translateX(-100%) scaleX(0)",
+          },
+          "50%": {
+            transform: "translateX(0%) scaleX(1)",
+          },
+          "100%": {
+            transform: "translateX(100%) scaleX(0)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "mining-cart": "mining-cart 8s ease-in-out infinite",
+        "drill-pulse": "drill-pulse 2s ease-in-out infinite",
+        "geological-scan": "geological-scan 3s ease-in-out infinite",
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
     },
   },
