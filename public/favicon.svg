@@ -1,0 +1,17 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="32" height="32" rx="8" fill="#0a0a0a"/>
+  <!-- Geological/Mining themed icon -->
+  <path d="M16 2L20 6L16 10L12 6L16 2Z" fill="#FFD700" stroke="#FFA500" stroke-width="1.5"/>
+  <path d="M6 12L10 16L6 20L2 16L6 12Z" fill="#8B4513" stroke="#654321" stroke-width="1.5"/>
+  <path d="M26 12L30 16L26 20L22 16L26 12Z" fill="#8B4513" stroke="#654321" stroke-width="1.5"/>
+  <path d="M16 22L20 26L16 30L12 26L16 22Z" fill="#FFD700" stroke="#FFA500" stroke-width="1.5"/>
+  <!-- Central geological core -->
+  <polygon points="16,8 20,12 16,16 12,12" fill="#FFD700" stroke="#FFA500" stroke-width="1"/>
+  <polygon points="16,16 20,20 16,24 12,20" fill="#8B4513" stroke="#654321" stroke-width="1"/>
+  <!-- Geological survey elements -->
+  <path d="M8 8L12 12" stroke="#FFD700" stroke-width="2" stroke-linecap="round"/>
+  <path d="M24 8L20 12" stroke="#8B4513" stroke-width="2" stroke-linecap="round"/>
+  <!-- Geological layers -->
+  <path d="M4 16L28 16" stroke="#8B4513" stroke-width="1" stroke-dasharray="2,2"/>
+  <path d="M4 20L28 20" stroke="#8B4513" stroke-width="1" stroke-dasharray="2,2"/>
+</svg>

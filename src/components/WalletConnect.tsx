@@ -1,63 +1,111 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { Wallet } from "lucide-react";
 
 const WalletConnect = () => {
-  const [isConnected, setIsConnected] = useState(false);
-  const [address, setAddress] = useState("");
-  const { toast } = useToast();
-
-  const connectWallet = () => {
-    // Simulate wallet connection
-    const mockAddress = "0x" + Math.random().toString(16).substr(2, 40);
-    setAddress(mockAddress);
-    setIsConnected(true);
-    
-    toast({
-      title: "Wallet Connected",
-      description: "Successfully connected to mining rights exchange",
-    });
-  };
-
-  const disconnectWallet = () => {
-    setIsConnected(false);
-    setAddress("");
-    
-    toast({
-      title: "Wallet Disconnected",
-      description: "Wallet disconnected from exchange",
-    });
-  };
-
   return (
     <div className="flex items-center gap-3">
-      {isConnected ? (
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 bg-muted px-3 py-2 rounded-lg">
-            <div className="h-2 w-2 bg-accent rounded-full animate-pulse" />
-            <span className="text-sm font-mono">
-              {address.slice(0, 6)}...{address.slice(-4)}
-            </span>
-          </div>
-          <Button 
-            variant="outline" 
-            size="sm" 
-            onClick={disconnectWallet}
-            className="border-stone text-stone hover:bg-stone hover:text-background"
-          >
-            Disconnect
-          </Button>
-        </div>
-      ) : (
-        <Button 
-          onClick={connectWallet}
-          className="bg-gradient-copper hover:opacity-90 text-background font-semibold"
-        >
-          <Wallet className="h-4 w-4 mr-2" />
-          Connect Wallet
-        </Button>
-      )}
+      <ConnectButton.Custom>
+        {({
+          account,
+          chain,
+          openAccountModal,
+          openChainModal,
+          openConnectModal,
+          authenticationStatus,
+          mounted,
+        }) => {
+          const ready = mounted && authenticationStatus !== 'loading';
+          const connected =
+            ready &&
+            account &&
+            chain &&
+            (!authenticationStatus ||
+              authenticationStatus === 'authenticated');
+
+          return (
+            <div
+              {...(!ready && {
+                'aria-hidden': true,
+                'style': {
+                  opacity: 0,
+                  pointerEvents: 'none',
+                  userSelect: 'none',
+                },
+              })}
+            >
+              {(() => {
+                if (!connected) {
+                  return (
+                    <button
+                      onClick={openConnectModal}
+                      type="button"
+                      className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white font-semibold px-4 py-2 rounded-lg flex items-center gap-2 transition-all duration-200"
+                    >
+                      <Wallet className="h-4 w-4" />
+                      Connect Wallet
+                    </button>
+                  );
+                }
+
+                if (chain.unsupported) {
+                  return (
+                    <button
+                      onClick={openChainModal}
+                      type="button"
+                      className="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded-lg"
+                    >
+                      Wrong network
+                    </button>
+                  );
+                }
+
+                return (
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={openChainModal}
+                      type="button"
+                      className="flex items-center gap-2 bg-muted px-3 py-2 rounded-lg hover:bg-muted/80 transition-colors"
+                    >
+                      {chain.hasIcon && (
+                        <div
+                          style={{
+                            background: chain.iconBackground,
+                            width: 12,
+                            height: 12,
+                            borderRadius: 999,
+                            overflow: 'hidden',
+                            marginRight: 4,
+                          }}
+                        >
+                          {chain.iconUrl && (
+                            <img
+                              alt={chain.name ?? 'Chain icon'}
+                              src={chain.iconUrl}
+                              style={{ width: 12, height: 12 }}
+                            />
+                          )}
+                        </div>
+                      )}
+                      {chain.name}
+                    </button>
+
+                    <button
+                      onClick={openAccountModal}
+                      type="button"
+                      className="flex items-center gap-2 bg-muted px-3 py-2 rounded-lg hover:bg-muted/80 transition-colors"
+                    >
+                      <div className="h-2 w-2 bg-green-500 rounded-full animate-pulse" />
+                      <span className="text-sm font-mono">
+                        {account.displayName}
+                      </span>
+                    </button>
+                  </div>
+                );
+              })()}
+            </div>
+          );
+        }}
+      </ConnectButton.Custom>
     </div>
   );
 };
