@@ -116,17 +116,18 @@ export const usePlaceBid = () => {
     isAnonymous: boolean = false
   ) => {
     try {
+      // Note: This uses FHE encryption, no direct ETH transfer
       await writeContract({
         address: CONTRACT_ADDRESS,
         abi: CONTRACT_ABI,
         functionName: 'placeBid',
         args: [BigInt(rightsId), amount, isAnonymous],
-        value: BigInt(amount),
+        // No value parameter - uses FHE encrypted bidding
       });
       
       toast({
         title: "Bid Placed",
-        description: `Your bid of ${amount} ETH has been placed successfully.`,
+        description: `Your encrypted bid has been placed successfully.`,
       });
     } catch (err) {
       toast({

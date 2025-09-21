@@ -102,11 +102,10 @@ contract GeoVaultTrade {
         uint256 rightsId,
         euint32 amount,
         ebool isAnonymous
-    ) public payable returns (uint256) {
+    ) public returns (uint256) {
         require(miningRights[rightsId].owner != address(0), "Mining rights do not exist");
         require(Fhe.decrypt(miningRights[rightsId].isActive), "Auction is not active");
         require(block.timestamp <= miningRights[rightsId].auctionEndTime, "Auction has ended");
-        require(msg.value >= Fhe.decrypt(amount), "Insufficient payment");
         
         uint256 bidId = bidCounter++;
         
@@ -118,7 +117,7 @@ contract GeoVaultTrade {
             timestamp: block.timestamp
         });
         
-        // Update mining rights
+        // Update mining rights with FHE encrypted data
         miningRights[rightsId].currentBid = amount;
         miningRights[rightsId].bidCount = miningRights[rightsId].bidCount + Fhe.asEuint32(1);
         
