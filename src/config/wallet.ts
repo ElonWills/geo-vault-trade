@@ -1,10 +1,10 @@
 import { getDefaultConfig } from '@rainbow-me/rainbowkit';
 import { sepolia } from 'wagmi/chains';
-import { config } from './env';
+import { config as envConfig } from './env';
 
-export const rainbowConfig = getDefaultConfig({
+export const config = getDefaultConfig({
   appName: 'Geo Vault Trade',
-  projectId: config.walletConnectProjectId,
+  projectId: envConfig.walletConnectProjectId,
   chains: [sepolia],
   ssr: false,
 });
